@@ -43,8 +43,16 @@ function command_install_nginx {
         mkdir -p /usr/local/etc/nginx/ssl
 
         rm /usr/local/etc/nginx/nginx.conf
-        nginx.conf /usr/local/etc/nginx
-        cp php_fpm /usr/local/etc/nginx/conf.d/ 
+
+        curl -L https://raw.githubusercontent.com/arnaudhe/config/master/nginx/nginx.conf -o /usr/local/etc/nginx/nginx.conf
+        curl -L https://raw.githubusercontent.com/arnaudhe/config/master/nginx/conf.d/php-fpm -o /usr/local/etc/nginx/conf.d/php-fpm
+        curl -L https://raw.githubusercontent.com/arnaudhe/config/master/nginx/sites-available/default -o /usr/local/etc/nginx/sites-available/default
+        curl -L https://raw.githubusercontent.com/arnaudhe/config/master/nginx/sites-available/default-ssl -o /usr/local/etc/nginx/sites-available/default-ssl
+        curl -L https://raw.githubusercontent.com/arnaudhe/config/master/nginx/sites-available/default-silex -o /usr/local/etc/nginx/sites-available/default-silex
+
+        ln -sfv /usr/local/etc/nginx/sites-available/default /usr/local/etc/nginx/sites-enabled/default
+        ln -sfv /usr/local/etc/nginx/sites-available/default-ssl /usr/local/etc/nginx/sites-enabled/default-ssl
+        ln -sfv /usr/local/etc/nginx/sites-available/default-silex /usr/local/etc/nginx/sites-enabled/default-silex
     }
 }
 
