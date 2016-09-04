@@ -15,6 +15,9 @@ function command_install {
 
         set -e
 
+        git submodule init
+        git submodule update
+
         if has_param --nginx "$@"; then
             pulsion nginx::install
         fi
@@ -38,6 +41,8 @@ function command_generate_database {
 
     function process {
 
+        echo "To be continued..."
+
     }
 }
 
@@ -45,7 +50,7 @@ function command_update {
 
     function help {
 
-        echo -e "Update silex dependencies and namespaces"
+        echo -e "Update silex dependencies, namespaces, and nginx/mysql runtimes"
 
     }
 
@@ -53,6 +58,7 @@ function command_update {
 
         set -e
         composer update
+        git submodule update
     }
 }
 
@@ -114,8 +120,12 @@ function command_doctor {
 
     function process {
 
+        set -e
+
         pulsion nginx::doctor
         pulsion mysql::doctor
+
+        verbose 1 "EVERYTHING IS WORKING !"
 
     }
 }

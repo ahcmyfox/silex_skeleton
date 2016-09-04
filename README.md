@@ -30,7 +30,7 @@ Note : This operation is done on install command
 
     pulsion restart
 
-##Update php libraries and namespace autoload
+##Update php libraries, namespace autoload, and nginx/mysql runtimes
 
     pulsion update
 
