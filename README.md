@@ -3,29 +3,34 @@ PHP Silex framework skeleton with pulsion scripts
 
 ##Install
 
-####Required : Homebrew, Composer
+####Required : Pulsion, Composer
 
-###NGINX with PHP-FPM
+    pulsion install [--nginx] [--mysql]
 
-####If you have not nginx with php-fpm installed
-    pulsion install_nginx
+Add options nginx and/or mysql to install their runtime. Homebrew is required
 
-### Mysql
+##To only generate database
 
-####If you have not Mysql installed
-    pulsion install_mysql
-
-### Silex project
-    pulsion install_silex
+    pulsion generate_database
+Note : This operation is done on install command
 
 ##Test the setup
 
     pulsion doctor
 
-##Start
+##Start all services
 
     pulsion start
 
-##Stop
+##Stop all services
 
     pulsion stop
+
+##Restart all services
+
+    pulsion restart
+
+##Update php libraries and namespace autoload
+
+    pulsion update
+
