@@ -18,7 +18,7 @@ function sendMail($app, $to, $subject, $content)
                       ->setSender('john@doe.com')
                       ->setReplyTo('john@doe.com')
                       ->setTo($to)   // replace with email recipient
-                      ->setBody($content)));
+                      ->setBody($content));
         return "OK";
     }
     catch (\Exception $e)
