@@ -1,0 +1,193 @@
+#!/bin/bash
+
+function command_hello {
+
+	function help {
+
+		echo -e "Example of pulsion command"
+
+	}
+
+	function process {
+
+		verbose 1 "Hello world !"
+
+	}
+}
+
+
+function command_install_nginx {
+
+    function help {
+
+        echo -e "Install nginx"
+
+    }
+
+    function process {
+
+        set -e
+
+        brew update
+        brew upgrade
+        brew tap homebrew/dupes
+        brew tap josegonzalez/homebrew-php
+        
+        brew install --without-apache --with-fpm --with-mysql php56
+        brew install nginx
+
+        mkdir -p /usr/local/etc/nginx/logs
+        mkdir -p /usr/local/etc/nginx/sites-available
+        mkdir -p /usr/local/etc/nginx/sites-enabled
+        mkdir -p /usr/local/etc/nginx/conf.d
+        mkdir -p /usr/local/etc/nginx/ssl
+
+        rm /usr/local/etc/nginx/nginx.conf
+        nginx.conf /usr/local/etc/nginx
+        cp php_fpm /usr/local/etc/nginx/conf.d/ 
+    }
+}
+
+function command_install_mysql {
+
+    function help {
+
+        echo -e "Install mysql"
+
+    }
+
+    function process {
+
+        set -e
+
+        brew update
+        brew upgrade
+        brew install mysql
+        mysql_secure_installation
+    }
+}
+
+function command_install_silex {
+
+    function help {
+
+        echo -e "Install silex dependencies"
+
+    }
+
+    function process {
+
+        set -e
+
+        composer install
+    }
+}
+
+function command_install_database {
+
+    function help {
+
+        echo -e "Install silex dependencies"
+
+    }
+
+    function process {
+
+        set -e
+
+        composer install
+    }
+}
+
+function command_update_silex {
+
+    function help {
+
+        echo -e "Install silex dependencies"
+
+    }
+
+    function process {
+
+        set -e
+
+        composer update
+    }
+}
+
+function command_start {
+
+    function help {
+
+        echo -e "Example of pulsion command"
+
+    }
+
+    function process {
+
+        verbose 1 "Starting php and php-fcm..."
+        launchctl load -w /usr/local/opt/php56/homebrew.mxcl.php56.plist
+        verbose 1 "Starting mysql..."
+        launchctl load /usr/local/opt/mysql/homebrew.mxcl.mysql.plist
+        verbose 1 "Starting nginx"
+        launchctl load /usr/local/opt/nginx/homebrew.mxcl.nginx.plist
+
+    }
+}
+
+function command_stop {
+
+    function help {
+
+        echo -e "Example of pulsion command"
+
+    }
+
+    function process {
+        
+        verbose 1 "Stopping php and php-fcm..."
+        launchctl unload -w /usr/local/opt/php56/homebrew.mxcl.php56.plist
+        verbose 1 "Stopping mysql..."
+        launchctl unload /usr/local/opt/mysql/homebrew.mxcl.mysql.plist
+        verbose 1 "Stopping nginx"
+        launchctl unload /usr/local/opt/nginx/homebrew.mxcl.nginx.plist
+
+    }
+}
+
+function command_doctor {
+
+    function help {
+
+        echo -e "Check install sanity"
+
+    }
+
+    function process {
+
+        verbose 1 "Starting php and php-fcm..."
+        launchctl load -w /usr/local/opt/php56/homebrew.mxcl.php56.plist
+        verbose 1 "Starting mysql..."
+        launchctl load /usr/local/opt/mysql/homebrew.mxcl.mysql.plist
+        verbose 1 "Starting nginx"
+        launchctl load /usr/local/opt/nginx/homebrew.mxcl.nginx.plist
+
+        sleep 2
+
+        set -e
+        verbose 1 "Test of php-fcm"
+        lsof -Pni4 | grep LISTEN | grep php
+        verbose 1 "Test of mysql"
+        echo quit | mysql -uroot
+        verbose 1 "Connection Ok"
+        verbose 1 "Test of nginx"
+        code=`curl -s -o /dev/null -w "%{http_code}" http://localhost:8080`
+        if [ $code = "200" ]; then
+            verbose 1 "Connection Ok (200)"
+            verbose 1 " "
+            verbose 1 "EVERYTHING IS WORKING !"
+        else
+            verbose 1 "Connection error (http $code)"
+        fi
+    }
+}
