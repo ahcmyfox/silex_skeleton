@@ -1,7 +1,14 @@
 #!/bin/bash
 
-import nginx "./nginx_pulsion"
-import mysql "./mysql_pulsion"
+if [ -e "nginx_pulsion/pulsion/config_pulsion" ]
+then
+    import nginx "./nginx_pulsion"
+fi
+
+if [ -e "mysql_pulsion/pulsion/config_pulsion" ]
+then
+    import mysql "./mysql_pulsion"
+fi
 
 function command_install {
 
@@ -17,6 +24,9 @@ function command_install {
 
         git submodule init
         git submodule update
+
+        import nginx "./nginx_pulsion"
+        import mysql "./mysql_pulsion"
 
         if has_param --nginx "$@"; then
             pulsion nginx::install
