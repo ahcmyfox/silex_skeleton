@@ -7,7 +7,7 @@ PHP Silex framework skeleton with pulsion scripts
 
     pulsion install [--nginx] [--mysql]
 
-Add options nginx and/or mysql to install their runtime. Homebrew is required
+Add options nginx and/or mysql to install their runtime.
 
 ##To only generate database
 
