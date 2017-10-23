@@ -1,36 +1,36 @@
 # silex_skeleton
 PHP Silex framework skeleton with pulsion scripts
 
-##Install
+## Install
 
-####Required : Pulsion, Composer
+#### Required : Pulsion, Composer
 
     pulsion install [--nginx] [--mysql]
 
 Add options nginx and/or mysql to install their runtime.
 
-##To only generate database
+## To only generate database
 
     pulsion generate_database
 Note : This operation is done on install command
 
-##Test the setup
+## Test the setup
 
     pulsion doctor
 
-##Start all services
+## Start all services
 
     pulsion start
 
-##Stop all services
+## Stop all services
 
     pulsion stop
 
-##Restart all services
+## Restart all services
 
     pulsion restart
 
-##Update php libraries, namespace autoload, and nginx/mysql runtimes
+## Update php libraries, namespace autoload, and nginx/mysql runtimes
 
     pulsion update
 
